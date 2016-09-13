@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'dk/version'
+require 'konkon/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "dk"
-  spec.version       = Dk::VERSION
+  spec.name          = "konkon"
+  spec.version       = Konkon::VERSION
   spec.authors       = ["ta1kt0me"]
   spec.email         = ["p.wadachi@gmail.com"]
 
