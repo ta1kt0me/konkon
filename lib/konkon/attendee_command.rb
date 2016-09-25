@@ -7,7 +7,6 @@ require 'konkon/attendee'
 
 module Konkon
   class AttendeeCommand < Thor
-
     desc 'import GROUP EVENT_ID FILE', 'import user registration("email string","ticket string","free boolean")'
     def import(group, event_id, file)
       logger = Logger.new(STDOUT)
@@ -26,28 +25,18 @@ module Konkon
         )
         attendee = page.attendee
 
-        session = page.visit_first
+        page.check_free
+        page.select_ticket
 
-        session.check '入場無料' if attendee.free?
-
-        if session.has_selector?('#new_admin_event_registration_ticket_type_id')
-          session.select(attendee.ticket, from: 'new_admin_event_registration[ticket_type_id]')
-        end
-
-        session.find(:css, '.select2-choice.select2-default').click
-        session.find(:css, '#s2id_autogen1_search').click
-        session.fill_in('s2id_autogen1_search', with: attendee.email)
-        if (elem = session.find(:css, '#select2-results-1 li')).text != '一致する結果が見つかりませんでした'
-          elem.click
-        else
+        unless page.select_attendee
           logger.info "#{attendee.email}: Fail to search address"
           next
         end
 
-        session.click_button('追加')
+        page.submit
 
         # check
-        if session.has_css?('#DataTables_Table_0 tbody') && session.find(:css, '#DataTables_Table_0 tbody').text.match(attendee.email)
+        if page.registered?
           logger.info "#{attendee.email}: Success to purchase"
         else
           logger.info "#{attendee.email}: Fail to purchase"
