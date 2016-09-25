@@ -73,11 +73,11 @@ module Konkon
     end
 
     def visit_first
-      session = build_session
-      session.visit(url)
+      new_session = build_session
+      new_session.visit(url)
       # NOTE: need to visit twice, mystery
-      session.visit(url)
-      session
+      new_session.visit(url)
+      new_session
     end
   end
 end
