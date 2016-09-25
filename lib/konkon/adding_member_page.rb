@@ -6,8 +6,9 @@ module Konkon
 
     attr_reader :url
 
-    def initialize(group)
-      @url = "https://manage.doorkeeper.jp/groups/#{group}/members/new"
+    def initialize(params)
+      @url = "https://manage.doorkeeper.jp/groups/#{params[:group]}/members/new"
+      @members = params[:members]
     end
 
     def session
