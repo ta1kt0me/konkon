@@ -10,7 +10,7 @@ module Konkon
       records = CSV.table(file)
       raise 'Mismatch csv header' unless validate_header(records.headers)
       records.each do |record|
-        page = AttendingPage.new(
+        AttendingPage.register(
           group: group,
           event_id: event_id,
           attendee: {
@@ -19,7 +19,6 @@ module Konkon
             email: record[:email]
           }
         )
-        page.register
       end
     end
 

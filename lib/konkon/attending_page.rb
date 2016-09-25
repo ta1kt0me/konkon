@@ -13,6 +13,10 @@ module Konkon
       @logger = Logger.new(STDOUT)
     end
 
+    def self.register(params)
+      new(params).register
+    end
+
     def register
       unless select_attendee
         logger.info "#{attendee.email}: Fail to search address"
