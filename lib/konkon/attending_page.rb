@@ -26,6 +26,8 @@ module Konkon
       logger.info "#{attendee.email}: #{registered? ? 'Success' : 'Fail'} to purchase"
     end
 
+    private
+
     def session
       @session ||= visit_first
     end
@@ -61,8 +63,6 @@ module Konkon
       session.has_css?('#DataTables_Table_0 tbody') &&
         session.find(:css, '#DataTables_Table_0 tbody').text.match(attendee.email)
     end
-
-    private
 
     def found_attendee?(elem)
       elem.text != '一致する結果が見つかりませんでした'
