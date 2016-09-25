@@ -19,6 +19,7 @@ module Konkon
       fill_members
       check_members
       submit
+      sleep members.size * 1
     end
 
     private
