@@ -1,7 +1,5 @@
 # konkon
 
-![Badge Status](https://ci-as-a-service)
-
 ## Description
 
 `konkon` operates Doorkeeper via commandline.
@@ -17,8 +15,10 @@
 
 ## Usage
 
-1. `konkon member`
-2. `konkon attendee`
+1. `konkon-member import groupname filepath`
+  - adding members to doorkeeper group
+2. `konkon-attendee import groupname eventid filepath`
+  - register attendees to doorkeeper event
 
 ## Installation
 
