@@ -10,13 +10,10 @@ module Konkon
 
       members = File.open(file).each_with_object([]) { |line, result| result << line }
       page = AddingMemberPage.new(group: group, members: members)
-      session = page.session
       page.fill_members
       page.check_members
       page.submit
-      session.click_button('メールアドレスをチェック')
 
-      session.click_button('を追加')
       output(members.map { |s| s.match(/<(?<email>.*@.*)>/)[:email] }, options[:output]) if options[:output]
     end
 
