@@ -27,7 +27,7 @@ module Konkon
         )
         attendee = page.attendee
 
-        session = visit_first(group, event_id)
+        session = page.visit_first
 
         session.check '入場無料' if attendee.free?
 
@@ -64,15 +64,6 @@ module Konkon
 
     def validate_header(headers)
       headers == [:email, :ticket, :free]
-    end
-
-    def visit_first(group, event_id)
-      session = build_session
-      url = "https://manage.doorkeeper.jp/groups/#{group}/events/#{event_id}/tickets/new"
-      session.visit(url)
-      # NOTE: need to visit twice, mystery
-      session.visit(url)
-      session
     end
   end
 end
