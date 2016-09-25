@@ -3,6 +3,11 @@ require 'konkon/adding_member_page'
 
 module Konkon
   class MemberCommand < Thor
+    # Email list.sample
+    # ```
+    # foo@example.com
+    # bar@example.com
+    # ```
     desc 'import GROUP FILE', 'import user mailaddress(name <email>)'
     option :output, type: :string, aliases: '-o', desc: 'Output file'
     def import(group, file)
