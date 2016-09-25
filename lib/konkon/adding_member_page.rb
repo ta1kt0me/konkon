@@ -11,6 +11,18 @@ module Konkon
       @members = params[:members]
     end
 
+    def fill_members
+      session.fill_in 'new_members_email', with: members.join("\n")
+    end
+
+    def check_members
+      session.click_button('メールアドレスをチェック')
+    end
+
+    def submit
+      session.click_button('を追加')
+    end
+
     def session
       @session ||= visit_first
     end

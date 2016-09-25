@@ -11,7 +11,9 @@ module Konkon
       members = File.open(file).each_with_object([]) { |line, result| result << line }
       page = AddingMemberPage.new(group: group, members: members)
       session = page.session
-      session.fill_in 'new_members_email', with: members.join("\n")
+      page.fill_members
+      page.check_members
+      page.submit
       session.click_button('メールアドレスをチェック')
 
       session.click_button('を追加')
