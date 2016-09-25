@@ -8,13 +8,15 @@ module Konkon
     def import(group, file)
       validate_arguments group, file
 
-      members = File.open(file).each_with_object([]) { |line, result| result << line }
-      page = AddingMemberPage.new(group: group, members: members)
+      page = AddingMemberPage.new(
+        group: group,
+        members: File.open(file).each_with_object([]) { |line, result| result << line }
+      )
       page.fill_members
       page.check_members
       page.submit
 
-      output(members.map { |s| s.match(/<(?<email>.*@.*)>/)[:email] }, options[:output]) if options[:output]
+      output(page.members.map { |s| s.match(/<(?<email>.*@.*)>/)[:email] }, options[:output]) if options[:output]
     end
 
     private
