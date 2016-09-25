@@ -2,6 +2,7 @@ require 'thor'
 require 'capybara/poltergeist'
 require 'csv'
 require 'konkon/session'
+require 'konkon/attending_page'
 require 'konkon/attendee'
 
 module Konkon
@@ -15,7 +16,16 @@ module Konkon
       records = CSV.table(file)
       raise 'Mismatch csv header' unless validate_header(records.headers)
       records.each do |record|
-        attendee = Attendee.new(free: attendee.free], ticket: attendee.ticket], email: attendee.email])
+        page = AttendingPage.new(
+          group: group,
+          event_id: event_id,
+          attendee: {
+            free: record[:free],
+            ticket: record[:ticket],
+            email: record[:email]
+          }
+        )
+        attendee = page.attendee
 
         session = visit_first(group, event_id)
 
