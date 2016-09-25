@@ -12,11 +12,10 @@ module Konkon
     def import(group, file)
       validate_arguments group, file
 
-      page = AddingMemberPage.new(
+      AddingMemberPage.register(
         group: group,
         members: File.open(file).each_with_object([]) { |line, result| result << line }
       )
-      page.register
     end
 
     private

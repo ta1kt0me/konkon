@@ -11,6 +11,10 @@ module Konkon
       @members = params[:members]
     end
 
+    def self.register(params)
+      new(paramas).register
+    end
+
     def register
       fill_members
       check_members
