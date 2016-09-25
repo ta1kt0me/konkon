@@ -12,7 +12,7 @@ module Konkon
     end
 
     def self.register(params)
-      new(paramas).register
+      new(params).register
     end
 
     def register
