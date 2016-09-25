@@ -12,10 +12,7 @@ module Konkon
         group: group,
         members: File.open(file).each_with_object([]) { |line, result| result << line }
       )
-      page.fill_members
-      page.check_members
-      page.submit
-
+      page.register
       output(page.members, options[:output]) if options[:output]
     end
 

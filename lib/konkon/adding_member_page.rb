@@ -11,6 +11,14 @@ module Konkon
       @members = params[:members]
     end
 
+    def register
+      fill_members
+      check_members
+      submit
+    end
+
+    private
+
     def fill_members
       session.fill_in 'new_members_email', with: members.join("\n")
     end
