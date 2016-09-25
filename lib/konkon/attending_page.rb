@@ -23,11 +23,7 @@ module Konkon
       select_ticket
       submit
 
-      if registered?
-        logger.info "#{attendee.email}: Success to purchase"
-      else
-        logger.info "#{attendee.email}: Fail to purchase"
-      end
+      logger.info "#{attendee.email}: #{registered? ? 'Success' : 'Fail'} to purchase"
     end
 
     def session
