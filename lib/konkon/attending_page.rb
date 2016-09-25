@@ -3,6 +3,8 @@ require 'konkon/session'
 
 module Konkon
   class AttendingPage
+    include Session
+
     attr_reader :attendee, :url
 
     def initialize(params)
