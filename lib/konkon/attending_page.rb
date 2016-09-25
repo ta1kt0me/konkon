@@ -30,7 +30,8 @@ module Konkon
       session.find(:css, '.select2-choice.select2-default').click
       session.find(:css, '#s2id_autogen1_search').click
       session.fill_in('s2id_autogen1_search', with: attendee.email)
-      if (elem = session.find(:css, '#select2-results-1 li')).text != '一致する結果が見つかりませんでした'
+      elem = session.find(:css, '#select2-results-1 li')
+      if found_attendee?(elem)
         elem.click
         true
       else
@@ -48,6 +49,10 @@ module Konkon
     end
 
     private
+
+    def found_attendee?(elem)
+      elem.text != '一致する結果が見つかりませんでした'
+    end
 
     def visit_first
       session = build_session
