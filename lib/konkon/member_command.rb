@@ -3,7 +3,7 @@ require 'capybara/poltergeist'
 require 'konkon/session'
 
 module Konkon
-  class Member < Thor
+  class MemberCommand < Thor
     include Session
 
     desc 'import GROUP FILE', 'import user mailaddress(name <email>)'

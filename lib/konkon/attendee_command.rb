@@ -4,7 +4,7 @@ require 'csv'
 require 'konkon/session'
 
 module Konkon
-  class Attendee < Thor
+  class AttendeeCommand < Thor
     include Session
     Register = Struct.new(:email, :ticket, :free)
 

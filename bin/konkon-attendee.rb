@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'konkon/attendee'
+require 'konkon/attendee_command'
 
-Konkon::Attendee.start
+Konkon::AttendeeCommand.start
