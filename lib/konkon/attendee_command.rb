@@ -4,6 +4,12 @@ require 'konkon/attending_page'
 
 module Konkon
   class AttendeeCommand < Thor
+    # CSV.sample
+    # ```
+    # "email","ticket","free"
+    # "bar@example.com","Normal Price", "true"
+    # "foo@example.com","Cheap Price", "false"
+    # ```
     desc 'import GROUP EVENT_ID FILE', 'import user registration("email string","ticket string","free boolean")'
     def import(group, event_id, file)
       validate_arguments group, event_id, file
