@@ -16,7 +16,7 @@ module Konkon
       page.check_members
       page.submit
 
-      output(page.members.map { |s| s.match(/<(?<email>.*@.*)>/)[:email] }, options[:output]) if options[:output]
+      output(page.members, options[:output]) if options[:output]
     end
 
     private
@@ -25,7 +25,8 @@ module Konkon
       raise unless File.exist?(file) || !group.empty?
     end
 
-    def output(emails, file)
+    def output(members, file)
+      emails = members.map { |s| s.match(/<(?<email>.*@.*)>/)[:email] }
       File.write("./tmp/#{file}", emails.join("\n"))
     end
   end
