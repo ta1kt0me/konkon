@@ -19,7 +19,7 @@ module Konkon
 
         session = visit_first(group, event_id)
 
-        session.check '入場無料' if attendee.free.to_sym == :true
+        session.check '入場無料' if attendee.free?
 
         if session.has_selector?('#new_admin_event_registration_ticket_type_id')
           session.select(attendee.ticket, from: 'new_admin_event_registration[ticket_type_id]')

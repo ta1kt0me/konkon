@@ -7,5 +7,9 @@ module Konkon
       @free = params[:free]
       @email = params[:email]
     end
+
+    def free?
+      free.to_sym == :true
+    end
   end
 end
