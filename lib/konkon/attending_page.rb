@@ -5,11 +5,29 @@ module Konkon
   class AttendingPage
     include Session
 
-    attr_reader :attendee, :url
+    attr_reader :attendee, :url, :logger
 
     def initialize(params)
       @url = "https://manage.doorkeeper.jp/groups/#{params[:group]}/events/#{params[:event_id]}/tickets/new"
       @attendee = Attendee.new(params[:attendee])
+      @logger = Logger.new(STDOUT)
+    end
+
+    def register
+      unless select_attendee
+        logger.info "#{attendee.email}: Fail to search address"
+        return
+      end
+
+      check_free
+      select_ticket
+      submit
+
+      if registered?
+        logger.info "#{attendee.email}: Success to purchase"
+      else
+        logger.info "#{attendee.email}: Fail to purchase"
+      end
     end
 
     def session
