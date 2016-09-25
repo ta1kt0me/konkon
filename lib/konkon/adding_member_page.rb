@@ -25,6 +25,7 @@ module Konkon
     private
 
     def fill_members
+      # TODO: if name & emil
       session.fill_in 'new_members_email', with: members.join("\n")
     end
 
