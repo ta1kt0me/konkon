@@ -4,7 +4,7 @@ module Konkon
   class AddingMemberPage
     include Session
 
-    attr_reader :url
+    attr_reader :url, :members
 
     def initialize(params)
       @url = "https://manage.doorkeeper.jp/groups/#{params[:group]}/members/new"
