@@ -9,7 +9,7 @@ module Konkon
       validate_arguments group, file
 
       members = File.open(file).each_with_object([]) { |line, result| result << line }
-      session = visit_first
+      session = visit_first(group)
       session.fill_in 'new_members_email', with: members.join("\n")
       session.click_button('メールアドレスをチェック')
 
@@ -27,7 +27,7 @@ module Konkon
       File.write("./tmp/#{file}", emails.join("\n"))
     end
 
-    def visit_first
+    def visit_first(group)
       Capybara.register_driver :poltergeist do |app|
         Capybara::Poltergeist::Driver.new(
           app,
