@@ -13,7 +13,7 @@ module Konkon
       attendees = CSV.table(file)
       raise 'Mismatch csv header' unless validate_header(attendees.headers)
       attendees.each do |attendee|
-        session = visit_first
+        session = visit_first(group, event_id)
 
         session.check '入場無料' if attendee[:free].to_sym == :true
 
@@ -52,7 +52,7 @@ module Konkon
       headers == [:email, :ticket, :free]
     end
 
-    def visit_first(url)
+    def visit_first(group, event_id)
       Capybara.register_driver :poltergeist do |app|
         Capybara::Poltergeist::Driver.new(
           app,
