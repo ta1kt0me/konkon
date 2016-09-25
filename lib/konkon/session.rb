@@ -1,3 +1,5 @@
+require 'capybara/poltergeist'
+
 module Konkon
   module Session
     def build_session

@@ -1,5 +1,4 @@
 require 'thor'
-require 'capybara/poltergeist'
 require 'csv'
 require 'konkon/attending_page'
 
