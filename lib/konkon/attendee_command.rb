@@ -2,6 +2,7 @@ require 'thor'
 require 'capybara/poltergeist'
 require 'csv'
 require 'konkon/session'
+require 'konkon/attendee'
 
 module Konkon
   class AttendeeCommand < Thor
@@ -14,31 +15,33 @@ module Konkon
       records = CSV.table(file)
       raise 'Mismatch csv header' unless validate_header(records.headers)
       records.each do |record|
+        attendee = Attendee.new(free: attendee.free], ticket: attendee.ticket], email: attendee.email])
+
         session = visit_first(group, event_id)
 
-        session.check '入場無料' if record[:free].to_sym == :true
+        session.check '入場無料' if attendee.free.to_sym == :true
 
         if session.has_selector?('#new_admin_event_registration_ticket_type_id')
-          session.select(record[:ticket], from: 'new_admin_event_registration[ticket_type_id]')
+          session.select(attendee.ticket, from: 'new_admin_event_registration[ticket_type_id]')
         end
 
         session.find(:css, '.select2-choice.select2-default').click
         session.find(:css, '#s2id_autogen1_search').click
-        session.fill_in('s2id_autogen1_search', with: record[:email])
+        session.fill_in('s2id_autogen1_search', with: attendee.email)
         if (elem = session.find(:css, '#select2-results-1 li')).text != '一致する結果が見つかりませんでした'
           elem.click
         else
-          logger.info "#{record[:email]}: Fail to search address"
+          logger.info "#{attendee.email}: Fail to search address"
           next
         end
 
         session.click_button('追加')
 
         # check
-        if session.has_css?('#DataTables_Table_0 tbody') && session.find(:css, '#DataTables_Table_0 tbody').text.match(record[:email])
-          logger.info "#{record[:email]}: Success to purchase"
+        if session.has_css?('#DataTables_Table_0 tbody') && session.find(:css, '#DataTables_Table_0 tbody').text.match(attendee.email)
+          logger.info "#{attendee.email}: Success to purchase"
         else
-          logger.info "#{record[:email]}: Fail to purchase"
+          logger.info "#{attendee.email}: Fail to purchase"
         end
       end
     end
