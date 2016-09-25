@@ -6,7 +6,6 @@ require 'konkon/session'
 module Konkon
   class AttendeeCommand < Thor
     include Session
-    Register = Struct.new(:email, :ticket, :free)
 
     desc 'import GROUP EVENT_ID FILE', 'import user registration("email string","ticket string","free boolean")'
     def import(group, event_id, file)
